@@ -1,0 +1,80 @@
+import art
+import random
+
+# input('would you like to play Black Jack? "y" or "n"')
+
+cards= [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+
+
+def random_card ():
+    rand_card = random.choice(cards)
+    my_cards.append(rand_card)
+
+def random_dealer_card ():
+    rand_card = random.choice(cards)
+    dealer_cards.append(rand_card)
+
+start_game = input("Would you like to play a game of BlackJack? 'y' or 'n'\n").lower()
+
+while start_game == "y":
+    my_cards = []
+    dealer_cards = []
+    sum_dealer_cards = sum(dealer_cards)
+    sum_my_cards = sum(my_cards)
+    print(art.logo)
+    start_game = True
+    if start_game == True:
+        random_card()
+        random_card()
+        random_dealer_card()
+        random_dealer_card()
+        sum_my_cards = sum(my_cards)
+        sum_dealer_cards = sum(dealer_cards)
+
+        print(f'Your cards: {my_cards}, current score: {sum_my_cards}')
+        dealer_first_card = (dealer_cards[0])
+        print(f'Dealers first card is: {dealer_first_card}')
+
+
+    another_card = input("Would you like another card? 'y' or 'n'").lower()
+    while another_card == "y":
+        sum_my_cards = sum(my_cards)
+        if another_card == "y":
+            random_card()
+            if sum(my_cards) > 21:
+                if 11 in my_cards:
+                    my_cards.remove(11)
+                    my_cards.append(1)
+                another_card = "n"
+            elif sum(my_cards) == 21:
+                another_card = "n"
+            else:
+                print(f'Your cards: {my_cards}, current score: {sum(my_cards)}')
+                print(f'Dealers first card is: {dealer_cards[0]}')
+                another_card = input("Would you like another card? 'y' or 'n'").lower()
+
+    while sum(dealer_cards) <= 16:
+        random_dealer_card()
+        sum_dealer_cards = sum(dealer_cards)
+        sum_my_cards = sum(my_cards)
+
+    if sum_dealer_cards > 21:
+        print("Dealer Busted! You WIN!")
+    elif sum_dealer_cards == 21:
+        print("Dealer Got Blackjack. You LOSE!")
+    elif sum_my_cards == 21:
+        print(f'Your cards: {my_cards}, current score: {sum(my_cards)}\nYou Got BlackJack! YOU WIN!')
+    elif sum_my_cards > 21:
+        print(f'Your cards: {my_cards}, current score: {sum(my_cards)}\nYou Busted, YOU LOSE!')
+    elif sum_dealer_cards == sum_my_cards:
+        print("Boring, it\'s a Draw!")
+    elif sum_dealer_cards > sum_my_cards:
+        print(f"Dealer WINS! Dealer Score: {sum_dealer_cards} \nYour Score: {sum_my_cards}")
+    elif sum_dealer_cards < sum_my_cards:
+        print(f"You WIN! Dealer Score: {sum_dealer_cards} \nYour Score: {sum_my_cards}")
+    else:
+        print('error')
+    print(f"Your Cards: {my_cards}\nDealers Cards: {dealer_cards}")
+    start_game = input("Would you like to play again? 'y' or 'n'")
+
