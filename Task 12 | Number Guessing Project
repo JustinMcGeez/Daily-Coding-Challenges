@@ -1,0 +1,39 @@
+import random
+import art
+
+print(art.logo)
+random_number = random.randint(1, 100)
+difficulty = input("What mode would you like to play on? 'easy' or 'hard'\neasy = 10 guesses\nhard = 5 guesses\n")
+
+guesses_left = 0
+if difficulty == "easy":
+    guesses_left += 10
+else:
+    guesses_left += 5
+
+user_guess = int(input("Alright let\'s go, please guess what number you think it is\n"))
+chosen_num = False
+while guesses_left > 0 or chosen_num == False:
+    if random_number == user_guess:
+        print(f"You guessed the number with {guesses_left} guesses left!\nCongrats YOU WIN!!")
+        chosen_num = True
+    elif random_number < user_guess:
+        guesses_left -= 1
+        print(f"Too High\nYou have {guesses_left} guesses left!")
+        if guesses_left == 0:
+            print(f"You ran out of guesses, you lose!\nThe number chosen was {random_number}")
+            chosen_num = True
+        else:
+            user_guess = int(input("What is your next guess?"))
+    elif random_number > user_guess:
+        guesses_left -= 1
+        print(f"Too Low\nYou have {guesses_left} guesses left!")
+        if guesses_left == 0:
+            print(f"You ran out of guesses, you lose!\nThe number chosen was {random_number}")
+        else:
+            user_guess = int(input("What is your next guess?\n"))
+
+
+
+
+
