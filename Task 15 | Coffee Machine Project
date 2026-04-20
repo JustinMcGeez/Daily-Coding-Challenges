@@ -1,0 +1,86 @@
+from functools import total_ordering
+
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+}
+
+
+#TODO: Create Input prompt What would you like? (espresso/latte/cappuccino): (Show after every customer while power is on use secret word off in prompt to turn off) done
+#TODO: Create a report option that gives Water, Milk Coffee and money levels done
+#TODO: before allowing to run check if machine has enouch resourses. “Sorry there is not enough water/ or whatever else.” done
+#TODO: If there are enough resources then it should promot user to inset change. done
+#todo: check if transaction was succesful (if they gave enough money) “Sorry that's not enough money. Money refunded.
+#todo: Money is added to proift of machine if to much mone is given then excess money is returned (2 decmial places)
+#todo: make coffee and subtract coffee from resources “Here is your latte. Enjoy!”
+
+
+def resource_checker ():
+    if MENU[user_input]['ingredients']['water'] > resources['water']:
+        print("Sorry there is not enough water")
+    elif MENU[user_input]['ingredients']['milk'] > resources['milk']:
+        print("Sorry there is not enough milk")
+    elif MENU[user_input]['ingredients']['coffee'] > resources['coffee']:
+        print("Sorry there is not enough coffee")
+    else:
+        print(f"Please inset change. Your drink costs {MENU["cappuccino"]['cost']}")
+        money()
+
+def money ():
+    q = float(input("how many quarters?"))
+    d = float(input("how many dimes?"))
+    n = float(input("how many nickels?"))
+    p = float(input("how many pennies?"))
+    total_inserted = q * 0.25 + d * 0.1 + n * .05 + p * 0.01
+    global PROFIT
+    if total_inserted == MENU[user_input]['cost']:
+        PROFIT += total_inserted
+    elif total_inserted > MENU[user_input]['cost']:
+        refund = total_inserted - MENU[user_input]['cost']
+        PROFIT += MENU[user_input]['cost']
+        print(f"WOW WOW Big baller you gave me to much money. Here is your remainder: ${refund}")
+    elif total_inserted < MENU[user_input]['cost']:
+        refund = total_inserted
+        print(f"You did not insert enough money. Please take back your pocket change of: ${refund}")
+
+
+PROFIT = 0
+machine_on = True
+while machine_on == True:
+    user_input = input("What would you like? (espresso/latte/cappuccino):").lower()
+    if user_input == 'report':
+        print(resources)
+    elif user_input == 'off':
+        machine_on = False
+    elif user_input == 'espresso' or user_input == 'latte' or user_input == 'cappuccino':
+        resource_checker()
+        print("Here is your latte ☕️. Enjoy!")
+
+
